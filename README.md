@@ -48,7 +48,7 @@ Place a file named fossil-math.wrap in your subprojects directory with the follo
 # ======================
 [wrap-git]
 url = https://github.com/fossillogic/fossil-math.git
-revision = v0.1.0
+revision = v0.1.1
 
 [provide]
 fossil-math = fossil_math_dep
@@ -61,7 +61,6 @@ Add the dependency by including this line:
 math_dep = dependency('fossil-math')
 ```
 
-
 ## Build Configuration Options
 
 Customize your build with the following Meson options:
@@ -71,6 +70,25 @@ To run the built-in test suite, configure Meson with:
 ```sh
 meson setup builddir -Dwith_test=enabled
 ```
+
+#### Tests Double as Samples
+
+The project is designed so that **test cases serve two purposes**:
+
+- ✅ **Unit Tests** – validate the framework’s correctness.  
+- 📖 **Usage Samples** – demonstrate how to use the libraries.  
+
+This approach keeps the codebase compact and avoids redundant “hello world” style examples.  
+Instead, the same code that proves correctness also teaches usage.  
+
+This mirrors the **Meson build system** itself, which tests its own functionality by using Meson to build Meson.  
+In the same way, `fossil-test` validates itself by demonstrating real-world usage in its own tests.  
+
+```bash
+meson test -C builddir -v
+```
+
+Running the test suite gives you both verification and practical examples you can learn from.
 
 ## Contributing and Support
 
