@@ -35,7 +35,7 @@ extern "C"
  * @param degrees Angle in degrees.
  * @return Angle in radians.
  */
-double fossil_math_trig_deg_to_rad(double degrees);
+FOSSIL_MATH_API double fossil_math_trig_deg_to_rad(double degrees);
 
 /**
  * @brief Converts radians to degrees.
@@ -43,7 +43,7 @@ double fossil_math_trig_deg_to_rad(double degrees);
  * @param radians Angle in radians.
  * @return Angle in degrees.
  */
-double fossil_math_trig_rad_to_deg(double radians);
+FOSSIL_MATH_API double fossil_math_trig_rad_to_deg(double radians);
 
 // ======================================================
 // Basic trig functions
@@ -55,7 +55,7 @@ double fossil_math_trig_rad_to_deg(double radians);
  * @param x Angle in radians.
  * @return Sine of the angle.
  */
-double fossil_math_trig_sin(double x);
+FOSSIL_MATH_API double fossil_math_trig_sin(double x);
 
 /**
  * @brief Computes the cosine of an angle (in radians).
@@ -63,7 +63,7 @@ double fossil_math_trig_sin(double x);
  * @param x Angle in radians.
  * @return Cosine of the angle.
  */
-double fossil_math_trig_cos(double x);
+FOSSIL_MATH_API double fossil_math_trig_cos(double x);
 
 /**
  * @brief Computes the tangent of an angle (in radians).
@@ -71,7 +71,7 @@ double fossil_math_trig_cos(double x);
  * @param x Angle in radians.
  * @return Tangent of the angle.
  */
-double fossil_math_trig_tan(double x);
+FOSSIL_MATH_API double fossil_math_trig_tan(double x);
 
 // Inverse
 
@@ -81,7 +81,7 @@ double fossil_math_trig_tan(double x);
  * @param x Value whose arcsine is to be computed.
  * @return Angle in radians.
  */
-double fossil_math_trig_asin(double x);
+FOSSIL_MATH_API double fossil_math_trig_asin(double x);
 
 /**
  * @brief Computes the arccosine (inverse cosine) of a value.
@@ -89,7 +89,7 @@ double fossil_math_trig_asin(double x);
  * @param x Value whose arccosine is to be computed.
  * @return Angle in radians.
  */
-double fossil_math_trig_acos(double x);
+FOSSIL_MATH_API double fossil_math_trig_acos(double x);
 
 /**
  * @brief Computes the arctangent (inverse tangent) of a value.
@@ -97,7 +97,7 @@ double fossil_math_trig_acos(double x);
  * @param x Value whose arctangent is to be computed.
  * @return Angle in radians.
  */
-double fossil_math_trig_atan(double x);
+FOSSIL_MATH_API double fossil_math_trig_atan(double x);
 
 /**
  * @brief Computes the arctangent of y/x using the signs of the arguments to determine the correct quadrant.
@@ -106,7 +106,7 @@ double fossil_math_trig_atan(double x);
  * @param x Abscissa value.
  * @return Angle in radians.
  */
-double fossil_math_trig_atan2(double y, double x);
+FOSSIL_MATH_API double fossil_math_trig_atan2(double y, double x);
 
 // ======================================================
 // Hyperbolic
@@ -118,7 +118,7 @@ double fossil_math_trig_atan2(double y, double x);
  * @param x Value whose hyperbolic sine is to be computed.
  * @return Hyperbolic sine of the value.
  */
-double fossil_math_trig_sinh(double x);
+FOSSIL_MATH_API double fossil_math_trig_sinh(double x);
 
 /**
  * @brief Computes the hyperbolic cosine of a value.
@@ -126,7 +126,7 @@ double fossil_math_trig_sinh(double x);
  * @param x Value whose hyperbolic cosine is to be computed.
  * @return Hyperbolic cosine of the value.
  */
-double fossil_math_trig_cosh(double x);
+FOSSIL_MATH_API double fossil_math_trig_cosh(double x);
 
 /**
  * @brief Computes the hyperbolic tangent of a value.
@@ -134,7 +134,7 @@ double fossil_math_trig_cosh(double x);
  * @param x Value whose hyperbolic tangent is to be computed.
  * @return Hyperbolic tangent of the value.
  */
-double fossil_math_trig_tanh(double x);
+FOSSIL_MATH_API double fossil_math_trig_tanh(double x);
 
 // Inverse hyperbolic
 
@@ -144,7 +144,7 @@ double fossil_math_trig_tanh(double x);
  * @param x Value whose inverse hyperbolic sine is to be computed.
  * @return Inverse hyperbolic sine of the value.
  */
-double fossil_math_trig_asinh(double x);
+FOSSIL_MATH_API double fossil_math_trig_asinh(double x);
 
 /**
  * @brief Computes the inverse hyperbolic cosine of a value.
@@ -152,7 +152,7 @@ double fossil_math_trig_asinh(double x);
  * @param x Value whose inverse hyperbolic cosine is to be computed.
  * @return Inverse hyperbolic cosine of the value.
  */
-double fossil_math_trig_acosh(double x);
+FOSSIL_MATH_API double fossil_math_trig_acosh(double x);
 
 /**
  * @brief Computes the inverse hyperbolic tangent of a value.
@@ -160,7 +160,7 @@ double fossil_math_trig_acosh(double x);
  * @param x Value whose inverse hyperbolic tangent is to be computed.
  * @return Inverse hyperbolic tangent of the value.
  */
-double fossil_math_trig_atanh(double x);
+FOSSIL_MATH_API double fossil_math_trig_atanh(double x);
 
 #ifdef __cplusplus
 }
