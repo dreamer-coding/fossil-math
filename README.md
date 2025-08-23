@@ -29,7 +29,15 @@
 - **Meson Build System**  
   Fossil Math uses Meson for build configuration. If you don’t have Meson installed, follow the instructions on the official [Meson website](https://mesonbuild.com/Getting-meson.html).
 
-### Adding Fossil Math as a Dependency
+### Adding Dependency
+
+#### Adding via Conan GitHub repository
+
+Conan can install packages directly from a GitHub repository if it contains a valid conanfile.py.
+
+```bash
+conan install git+https://github.com/fossillogic/fossil-math.git#v0.1.1 --name fossil_math --build=missing
+```
 
 #### Using Meson
 
