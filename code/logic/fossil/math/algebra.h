@@ -32,7 +32,7 @@ extern "C"
  * @param n Number of elements in each vector.
  * @return The dot product as a double.
  */
-double fossil_math_algebra_dot(const double* a, const double* b, size_t n);
+FOSSIL_MATH_API double fossil_math_algebra_dot(const double* a, const double* b, size_t n);
 
 /** 
  * Adds two vectors a and b of length n and stores the result in result.
@@ -41,7 +41,7 @@ double fossil_math_algebra_dot(const double* a, const double* b, size_t n);
  * @param result Pointer to the result vector.
  * @param n Number of elements in each vector.
  */
-void fossil_math_algebra_add(const double* a, const double* b, double* result, size_t n);
+FOSSIL_MATH_API void fossil_math_algebra_add(const double* a, const double* b, double* result, size_t n);
 
 /** 
  * Subtracts vector b from vector a, both of length n, and stores the result in result.
@@ -50,7 +50,7 @@ void fossil_math_algebra_add(const double* a, const double* b, double* result, s
  * @param result Pointer to the result vector.
  * @param n Number of elements in each vector.
  */
-void fossil_math_algebra_sub(const double* a, const double* b, double* result, size_t n);
+FOSSIL_MATH_API void fossil_math_algebra_sub(const double* a, const double* b, double* result, size_t n);
 
 /** 
  * Multiplies vector a by a scalar and stores the result in result.
@@ -59,7 +59,7 @@ void fossil_math_algebra_sub(const double* a, const double* b, double* result, s
  * @param result Pointer to the result vector.
  * @param n Number of elements in the vector.
  */
-void fossil_math_algebra_scalar_mul(const double* a, double scalar, double* result, size_t n);
+FOSSIL_MATH_API void fossil_math_algebra_scalar_mul(const double* a, double scalar, double* result, size_t n);
 
 /** 
  * Multiplies two matrices A and B and stores the result in matrix C.
@@ -72,7 +72,7 @@ void fossil_math_algebra_scalar_mul(const double* a, double scalar, double* resu
  * @param C Pointer to the result matrix (rowsA x colsB).
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_matrix_mul(const double* A, size_t rowsA, size_t colsA,
+FOSSIL_MATH_API int fossil_math_algebra_matrix_mul(const double* A, size_t rowsA, size_t colsA,
                                    const double* B, size_t rowsB, size_t colsB,
                                    double* C);
 
@@ -84,7 +84,7 @@ int fossil_math_algebra_matrix_mul(const double* A, size_t rowsA, size_t colsA,
  * @param T Pointer to the transposed matrix (cols x rows).
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_matrix_transpose(const double* A, size_t rows, size_t cols, double* T);
+FOSSIL_MATH_API int fossil_math_algebra_matrix_transpose(const double* A, size_t rows, size_t cols, double* T);
 
 /** 
  * Creates an identity matrix of size n x n and stores it in M.
@@ -92,7 +92,7 @@ int fossil_math_algebra_matrix_transpose(const double* A, size_t rows, size_t co
  * @param n Size of the matrix (n x n).
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_matrix_identity(double* M, size_t n);
+FOSSIL_MATH_API int fossil_math_algebra_matrix_identity(double* M, size_t n);
 
 /** 
  * Computes the determinant of a square matrix M of size n x n.
@@ -101,7 +101,7 @@ int fossil_math_algebra_matrix_identity(double* M, size_t n);
  * @param det Pointer to the variable to store the determinant.
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_matrix_determinant(const double* M, size_t n, double* det);
+FOSSIL_MATH_API int fossil_math_algebra_matrix_determinant(const double* M, size_t n, double* det);
 
 /** 
  * Computes the inverse of a square matrix M of size n x n and stores it in Inv.
@@ -110,7 +110,7 @@ int fossil_math_algebra_matrix_determinant(const double* M, size_t n, double* de
  * @param Inv Pointer to the output inverse matrix.
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_matrix_inverse(const double* M, size_t n, double* Inv);
+FOSSIL_MATH_API int fossil_math_algebra_matrix_inverse(const double* M, size_t n, double* Inv);
 
 /** 
  * Evaluates a polynomial at a given value x.
@@ -119,7 +119,7 @@ int fossil_math_algebra_matrix_inverse(const double* M, size_t n, double* Inv);
  * @param x Value at which to evaluate the polynomial.
  * @return The evaluated value as a double.
  */
-double fossil_math_algebra_poly_eval(const double* coeffs, size_t degree, double x);
+FOSSIL_MATH_API double fossil_math_algebra_poly_eval(const double* coeffs, size_t degree, double x);
 
 /** 
  * Computes the derivative of a polynomial.
@@ -127,7 +127,7 @@ double fossil_math_algebra_poly_eval(const double* coeffs, size_t degree, double
  * @param degree Degree of the original polynomial.
  * @param deriv Pointer to the array to store the derivative coefficients.
  */
-void fossil_math_algebra_poly_derivative(const double* coeffs, size_t degree, double* deriv);
+FOSSIL_MATH_API void fossil_math_algebra_poly_derivative(const double* coeffs, size_t degree, double* deriv);
 
 /** 
  * Adds two polynomials A and B and stores the result in result.
@@ -138,7 +138,7 @@ void fossil_math_algebra_poly_derivative(const double* coeffs, size_t degree, do
  * @param result Pointer to the result coefficients array.
  * @param degR Pointer to the degree of the resulting polynomial.
  */
-void fossil_math_algebra_poly_add(const double* A, size_t degA,
+FOSSIL_MATH_API void fossil_math_algebra_poly_add(const double* A, size_t degA,
                                   const double* B, size_t degB,
                                   double* result, size_t* degR);
 
@@ -151,7 +151,7 @@ void fossil_math_algebra_poly_add(const double* A, size_t degA,
  * @param result Pointer to the result coefficients array.
  * @param degR Pointer to the degree of the resulting polynomial.
  */
-void fossil_math_algebra_poly_mul(const double* A, size_t degA,
+FOSSIL_MATH_API void fossil_math_algebra_poly_mul(const double* A, size_t degA,
                                   const double* B, size_t degB,
                                   double* result, size_t* degR);
 
@@ -163,7 +163,7 @@ void fossil_math_algebra_poly_mul(const double* A, size_t degA,
  * @param n Size of the system.
  * @return 0 on success, non-zero on failure.
  */
-int fossil_math_algebra_solve_linear_system(const double* A, const double* b,
+FOSSIL_MATH_API int fossil_math_algebra_solve_linear_system(const double* A, const double* b,
                                             double* x, size_t n);
 
 /** 
@@ -175,7 +175,7 @@ int fossil_math_algebra_solve_linear_system(const double* A, const double* b,
  * @param root2 Pointer to store the second root.
  * @return 0 on success, non-zero if no real roots exist.
  */
-int fossil_math_algebra_solve_quadratic(double a, double b, double c,
+FOSSIL_MATH_API int fossil_math_algebra_solve_quadratic(double a, double b, double c,
                                         double* root1, double* root2);
 
 #ifdef __cplusplus
