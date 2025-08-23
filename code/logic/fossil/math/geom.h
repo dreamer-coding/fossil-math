@@ -62,7 +62,7 @@ typedef struct {
  * @param b Second 2D point.
  * @return Distance between points a and b.
  */
-double fossil_math_geom_distance2d(fossil_math_geom_point2d a,
+FOSSIL_MATH_API double fossil_math_geom_distance2d(fossil_math_geom_point2d a,
                                    fossil_math_geom_point2d b);
 
 /**
@@ -72,7 +72,7 @@ double fossil_math_geom_distance2d(fossil_math_geom_point2d a,
  * @param b Second 3D point.
  * @return Distance between points a and b.
  */
-double fossil_math_geom_distance3d(fossil_math_geom_point3d a,
+FOSSIL_MATH_API double fossil_math_geom_distance3d(fossil_math_geom_point3d a,
                                    fossil_math_geom_point3d b);
 
 /** 
@@ -87,7 +87,7 @@ double fossil_math_geom_distance3d(fossil_math_geom_point3d a,
  * @param c Circle structure.
  * @return Area of the circle.
  */
-double fossil_math_geom_circle_area(fossil_math_geom_circle c);
+FOSSIL_MATH_API double fossil_math_geom_circle_area(fossil_math_geom_circle c);
 
 /**
  * @brief Calculates the circumference of a circle.
@@ -95,7 +95,7 @@ double fossil_math_geom_circle_area(fossil_math_geom_circle c);
  * @param c Circle structure.
  * @return Circumference of the circle.
  */
-double fossil_math_geom_circle_circumference(fossil_math_geom_circle c);
+FOSSIL_MATH_API double fossil_math_geom_circle_circumference(fossil_math_geom_circle c);
 
 /**
  * @brief Checks if a 2D point lies inside or on the boundary of a circle.
@@ -104,7 +104,7 @@ double fossil_math_geom_circle_circumference(fossil_math_geom_circle c);
  * @param c Circle structure.
  * @return 1 if the point is inside or on the circle, 0 otherwise.
  */
-int fossil_math_geom_point_in_circle(fossil_math_geom_point2d p,
+FOSSIL_MATH_API int fossil_math_geom_point_in_circle(fossil_math_geom_point2d p,
                                      fossil_math_geom_circle c);
 
 /** 
@@ -121,7 +121,7 @@ int fossil_math_geom_point_in_circle(fossil_math_geom_point2d p,
  * @param c Third vertex of the triangle.
  * @return Area of the triangle.
  */
-double fossil_math_geom_triangle_area(fossil_math_geom_point2d a,
+FOSSIL_MATH_API double fossil_math_geom_triangle_area(fossil_math_geom_point2d a,
                                       fossil_math_geom_point2d b,
                                       fossil_math_geom_point2d c);
 
@@ -133,7 +133,7 @@ double fossil_math_geom_triangle_area(fossil_math_geom_point2d a,
  * @param c Third vertex of the triangle.
  * @return Perimeter of the triangle.
  */
-double fossil_math_geom_triangle_perimeter(fossil_math_geom_point2d a,
+FOSSIL_MATH_API double fossil_math_geom_triangle_perimeter(fossil_math_geom_point2d a,
                                            fossil_math_geom_point2d b,
                                            fossil_math_geom_point2d c);
 
@@ -151,7 +151,7 @@ double fossil_math_geom_triangle_perimeter(fossil_math_geom_point2d a,
  * @param dy Offset along the y-axis.
  * @return Translated 2D point.
  */
-fossil_math_geom_point2d fossil_math_geom_translate2d(fossil_math_geom_point2d p, double dx, double dy);
+FOSSIL_MATH_API fossil_math_geom_point2d fossil_math_geom_translate2d(fossil_math_geom_point2d p, double dx, double dy);
 
 /**
  * @brief Scales a 2D point by given scale factors.
@@ -161,7 +161,7 @@ fossil_math_geom_point2d fossil_math_geom_translate2d(fossil_math_geom_point2d p
  * @param sy Scale factor along the y-axis.
  * @return Scaled 2D point.
  */
-fossil_math_geom_point2d fossil_math_geom_scale2d(fossil_math_geom_point2d p, double sx, double sy);
+FOSSIL_MATH_API fossil_math_geom_point2d fossil_math_geom_scale2d(fossil_math_geom_point2d p, double sx, double sy);
 
 /**
  * @brief Rotates a 2D point around the origin by a given angle (in radians).
@@ -170,7 +170,7 @@ fossil_math_geom_point2d fossil_math_geom_scale2d(fossil_math_geom_point2d p, do
  * @param angle_rad Angle in radians.
  * @return Rotated 2D point.
  */
-fossil_math_geom_point2d fossil_math_geom_rotate2d(fossil_math_geom_point2d p, double angle_rad);
+FOSSIL_MATH_API fossil_math_geom_point2d fossil_math_geom_rotate2d(fossil_math_geom_point2d p, double angle_rad);
 
 /** 
  * ======================================================
@@ -185,7 +185,7 @@ fossil_math_geom_point2d fossil_math_geom_rotate2d(fossil_math_geom_point2d p, d
  * @param plane The plane structure.
  * @return Distance from the point to the plane.
  */
-double fossil_math_geom_point_plane_distance(fossil_math_geom_point3d p,
+FOSSIL_MATH_API double fossil_math_geom_point_plane_distance(fossil_math_geom_point3d p,
                                              fossil_math_geom_plane plane);
 
 #ifdef __cplusplus
