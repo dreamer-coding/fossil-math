@@ -17,6 +17,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/* ---------- Configuration / visibility ---------- */
+#if defined(_WIN32) && defined(FOSSIL_MATH_BUILD_DLL)
+#  define FOSSIL_MATH_API __declspec(dllexport)
+#elif defined(_WIN32) && defined(FOSSIL_MATH_USE_DLL)
+#  define FOSSIL_MATH_API __declspec(dllimport)
+#else
+#  define FOSSIL_MATH_API
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {
