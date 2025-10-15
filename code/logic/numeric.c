@@ -73,19 +73,31 @@ double fossil_math_numeric_integrate_romberg(fossil_func_t f, double a, double b
     int max_k = 20; // Limit k so that N = 1 << 20 = 1048576 (safe for memory and loop)
     int n = steps > max_k ? max_k : steps;
     double **R = (double **)malloc((n + 1) * sizeof(double *));
-    for (k = 0; k <= n; ++k)
-        R[k] = (double *)malloc((k + 1) * sizeof(double));
+    if (!R) return 0.0;
+    for (k = 0; k <= n; ++k) {
+        R[k] = (double *)malloc((n + 1) * sizeof(double));
+        if (!R[k]) {
+            // Free previously allocated memory on failure
+            for (int m = 0; m < k; ++m) free(R[m]);
+            free(R);
+            return 0.0;
+        }
+        // Initialize all elements to zero to avoid undefined behavior
+        for (j = 0; j <= n; ++j) R[k][j] = 0.0;
+    }
 
     for (k = 0; k <= n; ++k) {
-        int N = 1 << k;
-        if (N < 0 || N > 1048576) N = 1048576; // fallback to max safe N
+        size_t N = 1 << k;
+        if (N > 1048576) N = 1048576; // fallback to max safe N
         double h = fossil_math_safe_div(b - a, (double)N, 0.0);
         double sum = 0.5 * (f(a) + f(b));
-        for (int i = 1; i < N; ++i)
+        for (size_t i = 1; i < N; ++i)
             sum += f(a + i * h);
         R[k][0] = sum * h;
         for (j = 1; j <= k; ++j) {
-            R[k][j] = R[k][j - 1] + (R[k][j - 1] - R[k - 1][j - 1]) / (pow(4, j) - 1);
+            if (k > 0) {
+                R[k][j] = R[k][j - 1] + (R[k][j - 1] - R[k - 1][j - 1]) / (pow(4, j) - 1);
+            }
         }
     }
     double result = R[n][n];
