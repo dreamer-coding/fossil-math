@@ -99,6 +99,13 @@ int fossil_math_calc_register_func(
     size_t argc
 ) {
     if (!env || !name || !func) return -1;
+    for (size_t i = 0; i < env->func_count; ++i) {
+        if (strcmp(env->funcs[i].name, name) == 0) {
+            env->funcs[i].func = func;
+            env->funcs[i].argc = argc;
+            return 0;
+        }
+    }
     fossil_math_calc_func_entry_t* new_funcs =
         (env->func_count == 0)
             ? malloc(sizeof(fossil_math_calc_func_entry_t))
