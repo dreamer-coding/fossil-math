@@ -248,12 +248,7 @@ namespace fossil {
                 return (*fn)(std::string(name));
                 }
             };
-            // C function pointer expects: double (*)(const char*)
-            // We use a lambda that captures var_lookup via context pointer.
-            auto c_adapter = [](const char* name) -> double {
-                // This should never be called directly.
-                throw std::runtime_error("Adapter not set up.");
-            };
+
             // Unfortunately, fossil_math_sym_eval only accepts double (*)(const char*),
             // so we can't pass context. For simple cases, use a static or global lookup.
             // For advanced use, provide a C-compatible lookup function.
