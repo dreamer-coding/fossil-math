@@ -69,13 +69,16 @@ double fossil_math_numeric_integrate_simpson(fossil_func_t f, double a, double b
 double fossil_math_numeric_integrate_romberg(fossil_func_t f, double a, double b, int steps) {
     if (!f || steps <= 0 || fossil_math_equal(a, b, DBL_EPSILON)) return 0.0;
     int k, j;
-    int n = steps;
+    // Limit the maximum value of k to prevent N from overflowing
+    int max_k = sizeof(int) * 8 - 2; // 1 << (max_k) should not overflow int
+    int n = steps > max_k ? max_k : steps;
     double **R = (double **)malloc((n + 1) * sizeof(double *));
     for (k = 0; k <= n; ++k)
         R[k] = (double *)malloc((k + 1) * sizeof(double));
 
     for (k = 0; k <= n; ++k) {
         int N = 1 << k;
+        if (N < 0) N = 1 << (sizeof(int) * 8 - 2); // fallback to max safe N
         double h = fossil_math_safe_div(b - a, (double)N, 0.0);
         double sum = 0.5 * (f(a) + f(b));
         for (int i = 1; i < N; ++i)
