@@ -81,7 +81,7 @@ FOSSIL_TEST_CASE(c_numeric_test_integrate_romberg_sin) {
 }
 
 FOSSIL_TEST_CASE(c_numeric_test_integrate_mode_simpson) {
-    double result = fossil_math_numeric_integrate(test_func_quad, 0.0, 1.0, 100, FOSSIL_NUMERIC_MODE_SIMPSON);
+    double result = fossil_math_numeric_integrate(test_func_quad, 0.0, 1.0, 100, FOSSIL_NUMERIC_SIMPSON);
     ASSUME_ITS_EQUAL_F64(result, 1.0/3.0, 1e-6);
 }
 
