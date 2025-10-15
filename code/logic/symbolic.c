@@ -329,19 +329,53 @@ size_t fossil_math_sym_to_string(const fossil_math_sym_expr_t* expr, char* buffe
             break;
 
         case fossil_math_sym_OP: {
+            int need_paren_left = 0, need_paren_right = 0;
+            // Add parentheses for correct precedence
+            if (expr->op == '+' || expr->op == '-') {
+                // No parentheses needed for children
+            } else if (expr->op == '*' || expr->op == '/') {
+                if (expr->left && expr->left->type == fossil_math_sym_OP &&
+                    (expr->left->op == '+' || expr->left->op == '-')) {
+                    need_paren_left = 1;
+                }
+                if (expr->right && expr->right->type == fossil_math_sym_OP &&
+                    (expr->right->op == '+' || expr->right->op == '-')) {
+                    need_paren_right = 1;
+                }
+            } else if (expr->op == '^') {
+                if (expr->left && expr->left->type == fossil_math_sym_OP) need_paren_left = 1;
+                if (expr->right && expr->right->type == fossil_math_sym_OP) need_paren_right = 1;
+            }
+
+            if (need_paren_left && pos < bufsize - 1) buffer[pos++] = '(';
             if (expr->left) {
                 pos += fossil_math_sym_to_string(expr->left, buffer + pos, bufsize - pos);
             }
-            if (pos < bufsize - 1) {
-                buffer[pos++] = ' ';
-                buffer[pos++] = expr->op;
-                buffer[pos++] = ' ';
+            if (need_paren_left && pos < bufsize - 1) buffer[pos++] = ')';
+
+            // For multiplication, omit '*' if left is CONST and right is VAR (e.g., "2x")
+            if (expr->op == '*'
+                && expr->left && expr->left->type == fossil_math_sym_CONST
+                && expr->right && expr->right->type == fossil_math_sym_VAR) {
+                // No space or '*' between
+            } else {
+                if (pos < bufsize - 3) {
+                    buffer[pos++] = ' ';
+                    buffer[pos++] = expr->op;
+                    buffer[pos++] = ' ';
+                }
             }
+
+            if (need_paren_right && pos < bufsize - 1) buffer[pos++] = '(';
             if (expr->right) {
                 pos += fossil_math_sym_to_string(expr->right, buffer + pos, bufsize - pos);
             }
+            if (need_paren_right && pos < bufsize - 1) buffer[pos++] = ')';
             break;
         }
+        default:
+            // Defensive: unknown type
+            break;
     }
 
     if (pos >= bufsize) pos = bufsize - 1;
