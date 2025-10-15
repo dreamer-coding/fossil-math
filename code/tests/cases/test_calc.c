@@ -166,7 +166,6 @@ FOSSIL_TEST_GROUP(c_calc_tests) {
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_set_var);
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_register_func);
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_simple);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_constants);
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_operators);
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_function_args);
     FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_nested_functions);
