@@ -94,7 +94,7 @@ double fossil_math_numeric_integrate_romberg(fossil_func_t f, double a, double b
         // Ensure N does not exceed SIZE_MAX and loop is safe
         // Limit N to avoid undefined behavior on platforms with aggressive optimizations
         size_t safe_N = N > 1048575 ? 1048575 : N;
-        for (size_t i = 1; i < safe_N; ++i)
+        for (size_t i = 1; i <= safe_N; ++i)
             sum += f(a + i * h);
         R[k][0] = sum * h;
         for (j = 1; j <= k; ++j) {
