@@ -33,7 +33,7 @@
 /**
  * @brief Trapezoidal rule implementation.
  */
-static double fossil_math_numeric_integrate_trapezoidal(fossil_func_t f, double a, double b, int steps) {
+double fossil_math_numeric_integrate_trapezoidal(fossil_func_t f, double a, double b, int steps) {
     if (!f || steps <= 0 || fossil_math_equal(a, b, DBL_EPSILON)) return 0.0;
 
     double h = fossil_math_safe_div(b - a, (double)steps, 0.0);
@@ -48,7 +48,7 @@ static double fossil_math_numeric_integrate_trapezoidal(fossil_func_t f, double 
 /**
  * @brief Simpson's rule implementation.
  */
-static double fossil_math_numeric_integrate_simpson(fossil_func_t f, double a, double b, int steps) {
+double fossil_math_numeric_integrate_simpson(fossil_func_t f, double a, double b, int steps) {
     if (!f || steps <= 0 || fossil_math_equal(a, b, DBL_EPSILON)) return 0.0;
     if (steps % 2) steps++; // Simpson's rule requires even steps
 
@@ -66,7 +66,7 @@ static double fossil_math_numeric_integrate_simpson(fossil_func_t f, double a, d
 /**
  * @brief Romberg integration implementation.
  */
-static double fossil_math_numeric_integrate_romberg(fossil_func_t f, double a, double b, int steps) {
+double fossil_math_numeric_integrate_romberg(fossil_func_t f, double a, double b, int steps) {
     if (!f || steps <= 0 || fossil_math_equal(a, b, DBL_EPSILON)) return 0.0;
     int k, j;
     int n = steps;
