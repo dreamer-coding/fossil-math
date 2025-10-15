@@ -52,6 +52,7 @@ static fossil_math_sym_expr_t* fossil_math_sym_new_var(const char* name) {
     if (!e) return NULL;
     e->type = fossil_math_sym_VAR;
     strncpy(e->name, name, sizeof(e->name) - 1);
+    e->name[sizeof(e->name) - 1] = '\0';
     return e;
 }
 
