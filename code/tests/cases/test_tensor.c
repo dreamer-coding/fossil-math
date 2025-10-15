@@ -33,13 +33,13 @@
 // mock objects are set here.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_SUITE(c_algebra_fixture);
+FOSSIL_TEST_SUITE(c_tensor_fixture);
 
-FOSSIL_SETUP(c_algebra_fixture) {
+FOSSIL_SETUP(c_tensor_fixture) {
     // Setup the test fixture
 }
 
-FOSSIL_TEARDOWN(c_algebra_fixture) {
+FOSSIL_TEARDOWN(c_tensor_fixture) {
     // Teardown the test fixture
 }
 
@@ -173,14 +173,14 @@ FOSSIL_TEST_CASE(c_tensor_test_dot_matrix) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
-FOSSIL_TEST_GROUP(c_algebra_tests) {
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_create_and_free);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_set_and_get);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_fill);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_add);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_mul);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_dot_vector);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_tensor_test_dot_matrix);
+FOSSIL_TEST_GROUP(c_tensor_tests) {
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_create_and_free);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_set_and_get);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_fill);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_add);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_mul);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_dot_vector);
+    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_dot_matrix);
 
-    FOSSIL_TEST_REGISTER(c_algebra_fixture);
+    FOSSIL_TEST_REGISTER(c_tensor_fixture);
 } // end of tests
