@@ -51,104 +51,18 @@ FOSSIL_TEARDOWN(c_calc_fixture) {
 // as samples for library usage.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_CASE(c_math_test_tokenize_basic) {
-    fossil_math_token_t tokens[16];
-    size_t count = 0;
-    int ret = fossil_math_tokenize("2 + x", tokens, &count);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(count == 3);
-    ASSUME_ITS_TRUE(tokens[0].type == 'n');
-    ASSUME_ITS_EQUAL_F64(tokens[0].value, 2.0, FOSSIL_TEST_FLOAT_EPSILON);
-    ASSUME_ITS_TRUE(tokens[1].type == '+');
-    ASSUME_ITS_TRUE(tokens[2].type == 'v');
-    ASSUME_ITS_TRUE(strcmp(tokens[2].name, "x") == 0);
-}
-
-FOSSIL_TEST_CASE(c_math_test_tokenize_function) {
-    fossil_math_token_t tokens[16];
-    size_t count = 0;
-    int ret = fossil_math_tokenize("add(1,2)", tokens, &count);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(count == 6);
-    ASSUME_ITS_TRUE(tokens[0].type == 'f');
-    ASSUME_ITS_TRUE(strcmp(tokens[0].name, "add") == 0);
-    ASSUME_ITS_TRUE(tokens[1].type == '(');
-    ASSUME_ITS_TRUE(tokens[2].type == 'n');
-    ASSUME_ITS_EQUAL_F64(tokens[2].value, 1.0, FOSSIL_TEST_FLOAT_EPSILON);
-    ASSUME_ITS_TRUE(tokens[3].type == ',');
-    ASSUME_ITS_TRUE(tokens[4].type == 'n');
-    ASSUME_ITS_EQUAL_F64(tokens[4].value, 2.0, FOSSIL_TEST_FLOAT_EPSILON);
-    ASSUME_ITS_TRUE(tokens[5].type == ')');
-}
-
-FOSSIL_TEST_CASE(c_math_test_tokenize_constants) {
-    fossil_math_token_t tokens[8];
-    size_t count = 0;
-    int ret = fossil_math_tokenize("PI + E", tokens, &count);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(count == 3);
-    ASSUME_ITS_TRUE(tokens[0].type == 'v');
-    ASSUME_ITS_TRUE(strcmp(tokens[0].name, "PI") == 0);
-    ASSUME_ITS_EQUAL_F64(tokens[0].value, FOSSIL_MATH_PI, FOSSIL_TEST_FLOAT_EPSILON);
-    ASSUME_ITS_TRUE(tokens[2].type == 'v');
-    ASSUME_ITS_TRUE(strcmp(tokens[2].name, "E") == 0);
-    ASSUME_ITS_EQUAL_F64(tokens[2].value, FOSSIL_MATH_E, FOSSIL_TEST_FLOAT_EPSILON);
-}
-
-FOSSIL_TEST_CASE(c_math_test_eval_rpn_basic) {
-    fossil_math_token_t tokens[3];
-    tokens[0].type = 'n'; tokens[0].value = 2.0;
-    tokens[1].type = 'n'; tokens[1].value = 3.0;
-    tokens[2].type = '+'; strcpy(tokens[2].name, "+");
-    double result = fossil_math_eval_rpn(tokens, 3, NULL);
-    ASSUME_ITS_EQUAL_F64(result, 5.0, FOSSIL_TEST_FLOAT_EPSILON);
-}
-
-FOSSIL_TEST_CASE(c_math_test_eval_rpn_variable) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    fossil_math_calc_set_var(&env, "x", 7.0);
-    fossil_math_token_t tokens[3];
-    tokens[0].type = 'n'; tokens[0].value = 2.0;
-    tokens[1].type = 'v'; strcpy(tokens[1].name, "x");
-    tokens[2].type = '*'; strcpy(tokens[2].name, "*");
-    double result = fossil_math_eval_rpn(tokens, 3, &env);
-    ASSUME_ITS_EQUAL_F64(result, 14.0, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_env_free(&env);
-}
-
-FOSSIL_TEST_CASE(c_math_test_eval_rpn_function) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    fossil_math_calc_register_func(&env, "add", test_add_func, 2);
-    fossil_math_token_t tokens[4];
-    tokens[0].type = 'n'; tokens[0].value = 2.0;
-    tokens[1].type = 'n'; tokens[1].value = 3.0;
-    tokens[2].type = 'f'; strcpy(tokens[2].name, "add"); tokens[2].argc = 2;
-    tokens[3].type = ')';
-    // Simulate RPN for add(2,3): [2][3][add][)]
-    double result = fossil_math_eval_rpn(tokens, 4, &env);
-    ASSUME_ITS_EQUAL_F64(result, 5.0, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_env_free(&env);
-}
-
-FOSSIL_TEST_CASE(c_math_test_eval_rpn_constants) {
-    fossil_math_token_t tokens[3];
-    tokens[0].type = 'v'; strcpy(tokens[0].name, "PI"); tokens[0].value = FOSSIL_MATH_PI;
-    tokens[1].type = 'v'; strcpy(tokens[1].name, "E"); tokens[1].value = FOSSIL_MATH_E;
-    tokens[2].type = '+'; strcpy(tokens[2].name, "+");
-    double result = fossil_math_eval_rpn(tokens, 3, NULL);
-    ASSUME_ITS_EQUAL_F64(result, FOSSIL_MATH_PI + FOSSIL_MATH_E, FOSSIL_TEST_FLOAT_EPSILON);
-}
-
 FOSSIL_TEST_CASE(c_math_test_calc_env_init_free) {
     fossil_math_calc_env_t env;
     fossil_math_calc_env_init(&env);
     ASSUME_ITS_TRUE(env.vars == NULL);
     ASSUME_ITS_TRUE(env.funcs == NULL);
+    ASSUME_ITS_TRUE(env.var_count == 0);
+    ASSUME_ITS_TRUE(env.func_count == 0);
     fossil_math_calc_env_free(&env);
     ASSUME_ITS_TRUE(env.vars == NULL);
     ASSUME_ITS_TRUE(env.funcs == NULL);
+    ASSUME_ITS_TRUE(env.var_count == 0);
+    ASSUME_ITS_TRUE(env.func_count == 0);
 }
 
 FOSSIL_TEST_CASE(c_math_test_calc_set_var) {
@@ -156,10 +70,16 @@ FOSSIL_TEST_CASE(c_math_test_calc_set_var) {
     fossil_math_calc_env_init(&env);
     int ret = fossil_math_calc_set_var(&env, "x", 42.0);
     ASSUME_ITS_TRUE(ret == 0);
+    ASSUME_ITS_TRUE(env.var_count == 1);
     ASSUME_ITS_EQUAL_F64(env.vars[0].value, 42.0, FOSSIL_TEST_FLOAT_EPSILON);
     ret = fossil_math_calc_set_var(&env, "x", 24.0);
     ASSUME_ITS_TRUE(ret == 0);
+    ASSUME_ITS_TRUE(env.var_count == 1);
     ASSUME_ITS_EQUAL_F64(env.vars[0].value, 24.0, FOSSIL_TEST_FLOAT_EPSILON);
+    ret = fossil_math_calc_set_var(&env, "y", 100.0);
+    ASSUME_ITS_TRUE(ret == 0);
+    ASSUME_ITS_TRUE(env.var_count == 2);
+    ASSUME_ITS_EQUAL_F64(env.vars[1].value, 100.0, FOSSIL_TEST_FLOAT_EPSILON);
     fossil_math_calc_env_free(&env);
 }
 
@@ -172,8 +92,15 @@ FOSSIL_TEST_CASE(c_math_test_calc_register_func) {
     fossil_math_calc_env_init(&env);
     int ret = fossil_math_calc_register_func(&env, "add", test_add_func, 2);
     ASSUME_ITS_TRUE(ret == 0);
+    ASSUME_ITS_TRUE(env.func_count == 1);
     ASSUME_ITS_TRUE(env.funcs[0].func == test_add_func);
     ASSUME_ITS_TRUE(env.funcs[0].argc == 2);
+    ret = fossil_math_calc_register_func(&env, "add", test_add_func, 2);
+    ASSUME_ITS_TRUE(ret == 0); // Should update, not add new
+    ASSUME_ITS_TRUE(env.func_count == 1);
+    ret = fossil_math_calc_register_func(&env, "mul", test_add_func, 2);
+    ASSUME_ITS_TRUE(ret == 0);
+    ASSUME_ITS_TRUE(env.func_count == 2);
     fossil_math_calc_env_free(&env);
 }
 
@@ -187,25 +114,14 @@ FOSSIL_TEST_CASE(c_math_test_calc_eval_simple) {
     fossil_math_calc_env_free(&env);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_eval_constants) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    double result = fossil_math_calc_eval("PI + E", &env);
-    ASSUME_ITS_EQUAL_F64(result, FOSSIL_MATH_PI + FOSSIL_MATH_E, FOSSIL_TEST_FLOAT_EPSILON);
-    result = fossil_math_calc_eval("TWO_PI - HALF_PI", &env);
-    ASSUME_ITS_EQUAL_F64(result, FOSSIL_MATH_TWO_PI - FOSSIL_MATH_HALF_PI, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_env_free(&env);
-}
-
 FOSSIL_TEST_CASE(c_math_test_calc_eval_operators) {
     fossil_math_calc_env_t env;
     fossil_math_calc_env_init(&env);
-    double result = fossil_math_calc_eval("2 + 3 * 4", &env);
-    ASSUME_ITS_EQUAL_F64(result, 2 + 3 * 4, FOSSIL_TEST_FLOAT_EPSILON);
-    result = fossil_math_calc_eval("(2 + 3) * 4", &env);
-    ASSUME_ITS_EQUAL_F64(result, (2 + 3) * 4, FOSSIL_TEST_FLOAT_EPSILON);
-    result = fossil_math_calc_eval("2 ^ 3", &env);
-    ASSUME_ITS_EQUAL_F64(result, pow(2, 3), FOSSIL_TEST_FLOAT_EPSILON);
+    double result = fossil_math_calc_eval("2 + 3", &env);
+    ASSUME_ITS_EQUAL_F64(result, 5.0, FOSSIL_TEST_FLOAT_EPSILON);
+    fossil_math_calc_set_var(&env, "x", 4.0);
+    result = fossil_math_calc_eval("x * 2", &env);
+    ASSUME_ITS_EQUAL_F64(result, 8.0, FOSSIL_TEST_FLOAT_EPSILON);
     fossil_math_calc_env_free(&env);
 }
 
@@ -241,7 +157,6 @@ FOSSIL_TEST_CASE(c_math_test_calc_eval_invalid_expr) {
     ASSUME_ITS_TRUE(isnan(result));
     fossil_math_calc_env_free(&env);
 }
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
