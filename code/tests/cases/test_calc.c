@@ -57,7 +57,6 @@ FOSSIL_TEARDOWN(c_calc_fixture) {
 
 static double test_func_quad(double x) { return x * x; }
 static double test_func_sin(double x) { return sin(x); }
-static double test_func_cubic(double x) { return x * x * x; }
 
 FOSSIL_TEST_CASE(c_math_test_calc_derivative) {
     double h = 1e-6;
