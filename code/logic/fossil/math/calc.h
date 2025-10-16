@@ -32,103 +32,161 @@ extern "C"
 {
 #endif
 
-// ============================================================================
-// Calculator Function Types and Structures
-// ============================================================================
+// ==========================================================
+// Types
+// ==========================================================
+
+typedef double (*fossil_math_func_t)(const double x);  // Generic function pointer
+
+// ==========================================================
+// Derivatives
+// ==========================================================
 
 /**
- * @brief Function pointer type for calculator functions.
+ * @brief Compute the numerical derivative of a function at a given point.
  *
- * Each function takes an array of double arguments and the argument count,
- * and returns a double result.
+ * Uses the central difference method to approximate the derivative.
+ *
+ * @param f Function pointer to the function to differentiate.
+ * @param x Point at which to evaluate the derivative.
+ * @param h Step size for the approximation.
+ * @return Approximated derivative value at x.
  */
-typedef double (*fossil_math_calc_func_t)(double* args, size_t argc);
+double fossil_math_calc_derivative(fossil_math_func_t f, double x, double h);
 
 /**
- * @brief Structure representing a calculator variable.
+ * @brief Compute the nth order numerical derivative of a function at a given point.
  *
- * Stores the variable name and its value.
+ * Uses recursion and central difference to approximate higher-order derivatives.
+ *
+ * @param f Function pointer to the function to differentiate.
+ * @param x Point at which to evaluate the derivative.
+ * @param n Order of the derivative.
+ * @param h Step size for the approximation.
+ * @return Approximated nth derivative value at x.
  */
-typedef struct fossil_math_calc_var_t {
-    char name[32];      ///< Variable name
-    double value;       ///< Variable value
-} fossil_math_calc_var_t;
+double fossil_math_calc_derivative_n(fossil_math_func_t f, double x, int n, double h);
+
+// ==========================================================
+// Integrals
+// ==========================================================
 
 /**
- * @brief Structure representing a calculator function.
+ * @brief Numerically integrate a function over an interval using the trapezoidal rule.
  *
- * Stores the function name, pointer, and argument count.
+ * Approximates the definite integral by dividing the interval into subintervals and summing trapezoidal areas.
+ *
+ * @param f Function pointer to the function to integrate.
+ * @param a Lower bound of the interval.
+ * @param b Upper bound of the interval.
+ * @param n Number of subintervals.
+ * @return Approximated integral value.
  */
-typedef struct fossil_math_calc_func_entry_t {
-    char name[32];                  ///< Function name
-    fossil_math_calc_func_t func;        ///< Function pointer
-    size_t argc;                    ///< Number of arguments
-} fossil_math_calc_func_entry_t;
+double fossil_math_calc_integrate_trapezoidal(fossil_math_func_t f, double a, double b, size_t n);
 
 /**
- * @brief Calculator environment holding variables and functions.
+ * @brief Numerically integrate a function over an interval using Simpson’s rule.
  *
- * - vars:      Array of variables.
- * - funcs:     Array of functions.
- * - var_count: Number of variables.
- * - func_count:Number of functions.
+ * Approximates the definite integral using parabolic arcs over subintervals (n should be even).
+ *
+ * @param f Function pointer to the function to integrate.
+ * @param a Lower bound of the interval.
+ * @param b Upper bound of the interval.
+ * @param n Number of subintervals (should be even).
+ * @return Approximated integral value.
  */
-typedef struct fossil_math_calc_env_t {
-    fossil_math_calc_var_t* vars;                ///< Array of variables
-    fossil_math_calc_func_entry_t* funcs;        ///< Array of functions
-    size_t var_count;                       ///< Number of variables
-    size_t func_count;                      ///< Number of functions
-} fossil_math_calc_env_t;
-
-// ============================================================================
-// Calculator Functions
-// ============================================================================
+double fossil_math_calc_integrate_simpson(fossil_math_func_t f, double a, double b, size_t n);
 
 /**
- * @brief Evaluates an expression string using the given calculator environment.
+ * @brief Estimate the integral of a function over an interval using Monte Carlo sampling.
  *
- * @param expr Expression string to evaluate.
- * @param env Pointer to calculator environment.
- * @return Numeric result of the evaluation.
+ * Uses random sampling to estimate the area under the curve.
+ *
+ * @param f Function pointer to the function to integrate.
+ * @param a Lower bound of the interval.
+ * @param b Upper bound of the interval.
+ * @param samples Number of random samples to use.
+ * @return Approximated integral value.
  */
-double fossil_math_calc_eval(const char* expr, const fossil_math_calc_env_t* env);
+double fossil_math_calc_integrate_montecarlo(fossil_math_func_t f, double a, double b, size_t samples);
+
+// ==========================================================
+// Limits
+// ==========================================================
 
 /**
- * @brief Sets the value of a variable in the calculator environment.
+ * @brief Estimate the limit of a function as x approaches a given value.
  *
- * @param env Pointer to calculator environment.
- * @param name Variable name.
- * @param value Value to set.
- * @return 0 on success, non-zero on error.
+ * Uses a small step size to approximate the limit.
+ *
+ * @param f Function pointer to the function.
+ * @param x Point at which to evaluate the limit.
+ * @param h Step size for the approximation.
+ * @return Approximated limit value.
  */
-int fossil_math_calc_set_var(fossil_math_calc_env_t* env, const char* name, double value);
+double fossil_math_calc_limit(fossil_math_func_t f, double x, double h);
+
+// ==========================================================
+// Root Finding
+// ==========================================================
 
 /**
- * @brief Registers a function in the calculator environment.
+ * @brief Find a root of a function using the Newton-Raphson method.
  *
- * @param env Pointer to calculator environment.
- * @param name Function name.
- * @param func Function pointer.
- * @param argc Number of arguments the function takes.
- * @return 0 on success, non-zero on error.
+ * Iteratively refines the root estimate using the function and its derivative.
+ *
+ * @param f Function pointer to the function whose root is sought.
+ * @param df Function pointer to the derivative of f.
+ * @param x0 Initial guess for the root.
+ * @param tol Tolerance for convergence.
+ * @param max_iter Maximum number of iterations.
+ * @return Approximated root value.
  */
-int fossil_math_calc_register_func(fossil_math_calc_env_t* env, const char* name, fossil_math_calc_func_t func, size_t argc);
+double fossil_math_calc_root_newton(fossil_math_func_t f, fossil_math_func_t df, double x0, double tol, size_t max_iter);
 
 /**
- * @brief Initializes the calculator environment.
+ * @brief Find a root of a function using the bisection method.
  *
- * Allocates memory for variables and functions.
+ * Iteratively narrows the interval where the root lies until convergence.
  *
- * @param env Pointer to calculator environment.
+ * @param f Function pointer to the function whose root is sought.
+ * @param a Lower bound of the interval.
+ * @param b Upper bound of the interval.
+ * @param tol Tolerance for convergence.
+ * @param max_iter Maximum number of iterations.
+ * @return Approximated root value.
  */
-void fossil_math_calc_env_init(fossil_math_calc_env_t* env);
+double fossil_math_calc_root_bisection(fossil_math_func_t f, double a, double b, double tol, size_t max_iter);
+
+// ==========================================================
+// Utilities
+// ==========================================================
 
 /**
- * @brief Frees resources associated with the calculator environment.
+ * @brief Compute the gradient vector for a multivariable function.
  *
- * @param env Pointer to calculator environment.
+ * Evaluates the partial derivatives for each variable to form the gradient vector.
+ *
+ * @param funcs Array of function pointers, each representing a partial derivative.
+ * @param x Array of input variable values.
+ * @param grad Output array for the gradient vector.
+ * @param dim Dimension of the input space.
+ * @param h Step size for the approximation.
  */
-void fossil_math_calc_env_free(fossil_math_calc_env_t* env);
+void fossil_math_calc_gradient(fossil_math_func_t* funcs, const double* x, double* grad, size_t dim, double h);
+
+/**
+ * @brief Compute the numerical partial derivative of a multivariable function.
+ *
+ * Approximates the partial derivative with respect to a specific variable.
+ *
+ * @param f Function pointer to the function.
+ * @param x Array of input variable values.
+ * @param i Index of the variable to differentiate with respect to.
+ * @param h Step size for the approximation.
+ * @return Approximated partial derivative value.
+ */
+double fossil_math_calc_partial(fossil_math_func_t f, const double* x, size_t i, double h);
 
 #ifdef __cplusplus
 }
@@ -141,61 +199,133 @@ namespace fossil {
     namespace math {
 
         /**
-         * @brief Calculator utility class providing static methods for calculator operations.
+         * @brief C++ wrappers for core mathematical calculation functions.
          *
-         * This class wraps the C calculator functions in a C++-friendly interface,
-         * allowing for easier use in C++ codebases. All methods are static and
-         * operate directly on the provided structures.
+         * The Calc class provides static methods that wrap the C functions defined in fossil/math/calc.h,
+         * offering a C++-friendly interface for numerical calculus operations such as derivatives, integrals,
+         * limits, root finding, and utility calculations. Each method directly delegates to its corresponding
+         * C implementation, ensuring high performance and cross-language compatibility.
          */
-        class Calculator {
+        class Calc {
         public:
             /**
-             * @brief Evaluates an expression string using the given calculator environment.
-             * @param expr Expression string to evaluate.
-             * @param env Reference to calculator environment.
-             * @return Numeric result of the evaluation.
+             * @brief Compute the numerical derivative of a function at a given point.
+             * @param f Function pointer to the function to differentiate.
+             * @param x Point at which to evaluate the derivative.
+             * @param h Step size for the central difference approximation.
+             * @return Approximated derivative value at x.
              */
-            static double eval(const std::string& expr, const fossil_math_calc_env_t& env) {
-            return fossil_math_calc_eval(expr.c_str(), &env);
+            static double derivative(fossil_math_func_t f, double x, double h) {
+            return fossil_math_calc_derivative(f, x, h);
             }
 
             /**
-             * @brief Sets the value of a variable in the calculator environment.
-             * @param env Reference to calculator environment.
-             * @param name Variable name.
-             * @param value Value to set.
-             * @return 0 on success, non-zero on error.
+             * @brief Compute the nth order numerical derivative of a function at a given point.
+             * @param f Function pointer to the function to differentiate.
+             * @param x Point at which to evaluate the derivative.
+             * @param n Order of the derivative.
+             * @param h Step size for the approximation.
+             * @return Approximated nth derivative value at x.
              */
-            static int set_var(fossil_math_calc_env_t& env, const std::string& name, double value) {
-            return fossil_math_calc_set_var(&env, name.c_str(), value);
+            static double derivative_n(fossil_math_func_t f, double x, int n, double h) {
+            return fossil_math_calc_derivative_n(f, x, n, h);
             }
 
             /**
-             * @brief Registers a function in the calculator environment.
-             * @param env Reference to calculator environment.
-             * @param name Function name.
-             * @param func Function pointer.
-             * @param argc Number of arguments the function takes.
-             * @return 0 on success, non-zero on error.
+             * @brief Numerically integrate a function over an interval using the trapezoidal rule.
+             * @param f Function pointer to the function to integrate.
+             * @param a Lower bound of the interval.
+             * @param b Upper bound of the interval.
+             * @param n Number of subintervals.
+             * @return Approximated integral value.
              */
-            static int register_func(fossil_math_calc_env_t& env, const std::string& name, fossil_math_calc_func_t func, size_t argc) {
-            return fossil_math_calc_register_func(&env, name.c_str(), func, argc);
+            static double integrate_trapezoidal(fossil_math_func_t f, double a, double b, size_t n) {
+            return fossil_math_calc_integrate_trapezoidal(f, a, b, n);
             }
 
             /**
-             * @brief Initializes the calculator environment.
-             * @param env Reference to calculator environment.
+             * @brief Numerically integrate a function over an interval using Simpson’s rule.
+             * @param f Function pointer to the function to integrate.
+             * @param a Lower bound of the interval.
+             * @param b Upper bound of the interval.
+             * @param n Number of subintervals (should be even).
+             * @return Approximated integral value.
              */
-            static void init(fossil_math_calc_env_t& env) {
-            fossil_math_calc_env_init(&env);
+            static double integrate_simpson(fossil_math_func_t f, double a, double b, size_t n) {
+            return fossil_math_calc_integrate_simpson(f, a, b, n);
             }
 
             /**
-             * @brief Frees resources associated with the calculator environment.
-             * @param env Reference to calculator environment.
+             * @brief Estimate the integral of a function over an interval using Monte Carlo sampling.
+             * @param f Function pointer to the function to integrate.
+             * @param a Lower bound of the interval.
+             * @param b Upper bound of the interval.
+             * @param samples Number of random samples to use.
+             * @return Approximated integral value.
              */
-            static void free(fossil_math_calc_env_t& env) {
-            fossil_math_calc_env_free(&env);
+            static double integrate_montecarlo(fossil_math_func_t f, double a, double b, size_t samples) {
+            return fossil_math_calc_integrate_montecarlo(f, a, b, samples);
+            }
+
+            /**
+             * @brief Estimate the limit of a function as x approaches a given value.
+             * @param f Function pointer to the function.
+             * @param x Point at which to evaluate the limit.
+             * @param h Step size for the approximation.
+             * @return Approximated limit value.
+             */
+            static double limit(fossil_math_func_t f, double x, double h) {
+            return fossil_math_calc_limit(f, x, h);
+            }
+
+            /**
+             * @brief Find a root of a function using the Newton-Raphson method.
+             * @param f Function pointer to the function whose root is sought.
+             * @param df Function pointer to the derivative of f.
+             * @param x0 Initial guess for the root.
+             * @param tol Tolerance for convergence.
+             * @param max_iter Maximum number of iterations.
+             * @return Approximated root value.
+             */
+            static double root_newton(fossil_math_func_t f, fossil_math_func_t df, double x0, double tol, size_t max_iter) {
+            return fossil_math_calc_root_newton(f, df, x0, tol, max_iter);
+            }
+
+            /**
+             * @brief Find a root of a function using the bisection method.
+             * @param f Function pointer to the function whose root is sought.
+             * @param a Lower bound of the interval.
+             * @param b Upper bound of the interval.
+             * @param tol Tolerance for convergence.
+             * @param max_iter Maximum number of iterations.
+             * @return Approximated root value.
+             */
+            static double root_bisection(fossil_math_func_t f, double a, double b, double tol, size_t max_iter) {
+            return fossil_math_calc_root_bisection(f, a, b, tol, max_iter);
+            }
+
+            /**
+             * @brief Compute the gradient vector for a multivariable function.
+             * @param funcs Array of function pointers, each representing a partial derivative.
+             * @param x Array of input variable values.
+             * @param grad Output array for the gradient vector.
+             * @param dim Dimension of the input space.
+             * @param h Step size for the approximation.
+             */
+            static void gradient(fossil_math_func_t* funcs, const double* x, double* grad, size_t dim, double h) {
+            fossil_math_calc_gradient(funcs, x, grad, dim, h);
+            }
+
+            /**
+             * @brief Compute the numerical partial derivative of a multivariable function.
+             * @param f Function pointer to the function.
+             * @param x Array of input variable values.
+             * @param i Index of the variable to differentiate with respect to.
+             * @param h Step size for the approximation.
+             * @return Approximated partial derivative value.
+             */
+            static double partial(fossil_math_func_t f, const double* x, size_t i, double h) {
+            return fossil_math_calc_partial(f, x, i, h);
             }
         };
 
