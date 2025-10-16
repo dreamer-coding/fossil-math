@@ -29,11 +29,11 @@
 // Conversion
 // ======================================================
 double fossil_math_trig_deg_to_rad(double degrees) {
-    return degrees * (FOSSIL_MATH_PI / 180.0);
+    return degrees * FOSSIL_MATH_DEG2RAD;
 }
 
 double fossil_math_trig_rad_to_deg(double radians) {
-    return radians * (180.0 / FOSSIL_MATH_PI);
+    return radians * FOSSIL_MATH_RAD2DEG;
 }
 
 // ======================================================

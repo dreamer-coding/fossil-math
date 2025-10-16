@@ -32,7 +32,7 @@ double fossil_math_geom_distance2d(fossil_math_geom_point2d a,
                                    fossil_math_geom_point2d b) {
     double dx = a.x - b.x;
     double dy = a.y - b.y;
-    return sqrt(dx*dx + dy*dy);
+    return sqrt(FOSSIL_MATH_SQR(dx) + FOSSIL_MATH_SQR(dy));
 }
 
 double fossil_math_geom_distance3d(fossil_math_geom_point3d a,
@@ -40,18 +40,18 @@ double fossil_math_geom_distance3d(fossil_math_geom_point3d a,
     double dx = a.x - b.x;
     double dy = a.y - b.y;
     double dz = a.z - b.z;
-    return sqrt(dx*dx + dy*dy + dz*dz);
+    return sqrt(FOSSIL_MATH_SQR(dx) + FOSSIL_MATH_SQR(dy) + FOSSIL_MATH_SQR(dz));
 }
 
 // ======================================================
 // Circle
 // ======================================================
 double fossil_math_geom_circle_area(fossil_math_geom_circle c) {
-    return FOSSIL_MATH_PI * c.radius * c.radius;
+    return FOSSIL_MATH_PI * FOSSIL_MATH_SQR(c.radius);
 }
 
 double fossil_math_geom_circle_circumference(fossil_math_geom_circle c) {
-    return 2.0 * FOSSIL_MATH_PI * c.radius;
+    return FOSSIL_MATH_TWO_PI * c.radius;
 }
 
 int fossil_math_geom_point_in_circle(fossil_math_geom_point2d p,
@@ -65,7 +65,7 @@ int fossil_math_geom_point_in_circle(fossil_math_geom_point2d p,
 double fossil_math_geom_triangle_area(fossil_math_geom_point2d a,
                                       fossil_math_geom_point2d b,
                                       fossil_math_geom_point2d c) {
-    return fabs(0.5 * (a.x*(b.y-c.y) + b.x*(c.y-a.y) + c.x*(a.y-b.y)));
+    return fossil_math_abs(0.5 * (a.x*(b.y-c.y) + b.x*(c.y-a.y) + c.x*(a.y-b.y)));
 }
 
 double fossil_math_geom_triangle_perimeter(fossil_math_geom_point2d a,
@@ -105,11 +105,11 @@ fossil_math_geom_point2d fossil_math_geom_rotate2d(fossil_math_geom_point2d p, d
 // ======================================================
 double fossil_math_geom_point_plane_distance(fossil_math_geom_point3d p,
                                              fossil_math_geom_plane plane) {
-    double num = fabs(plane.normal.x * p.x +
-                      plane.normal.y * p.y +
-                      plane.normal.z * p.z + plane.d);
-    double denom = sqrt(plane.normal.x * plane.normal.x +
-                        plane.normal.y * plane.normal.y +
-                        plane.normal.z * plane.normal.z);
-    return num / denom;
+    double num = fossil_math_abs(plane.normal.x * p.x +
+                                 plane.normal.y * p.y +
+                                 plane.normal.z * p.z + plane.d);
+    double denom = sqrt(FOSSIL_MATH_SQR(plane.normal.x) +
+                        FOSSIL_MATH_SQR(plane.normal.y) +
+                        FOSSIL_MATH_SQR(plane.normal.z));
+    return fossil_math_safe_div(num, denom, 0.0);
 }

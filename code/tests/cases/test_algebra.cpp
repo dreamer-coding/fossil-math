@@ -160,8 +160,8 @@ FOSSIL_TEST_CASE(cpp_math_test_poly_mul) {
 FOSSIL_TEST_CASE(cpp_math_test_solve_quadratic_real) {
     auto roots = fossil::math::Algebra::solve_quadratic(1, -3, 2); // x^2 - 3x + 2 = 0
     ASSUME_ITS_TRUE(
-        (fabs(roots.first - 2.0) < FOSSIL_TEST_FLOAT_EPSILON && fabs(roots.second - 1.0) < FOSSIL_TEST_FLOAT_EPSILON) ||
-        (fabs(roots.first - 1.0) < FOSSIL_TEST_FLOAT_EPSILON && fabs(roots.second - 2.0) < FOSSIL_TEST_FLOAT_EPSILON)
+        (fabs(roots[0] - 2.0) < FOSSIL_TEST_FLOAT_EPSILON && fabs(roots[1] - 1.0) < FOSSIL_TEST_FLOAT_EPSILON) ||
+        (fabs(roots[0] - 1.0) < FOSSIL_TEST_FLOAT_EPSILON && fabs(roots[1] - 2.0) < FOSSIL_TEST_FLOAT_EPSILON)
     );
 }
 

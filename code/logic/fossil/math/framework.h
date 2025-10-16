@@ -26,8 +26,12 @@
 #define FOSSIL_MATH_FRAMEWORK_H
 
 #include "math.h"
+#include "symbolic.h"
 #include "algebra.h"
+#include "numeric.h"
+#include "tensor.h"
 #include "geom.h"
 #include "trig.h"
+#include "calc.h"
 
 #endif /* FOSSIL_MATH_FRAMEWORK_H */

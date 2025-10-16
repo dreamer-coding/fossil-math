@@ -1,17 +1,14 @@
 # **Fossil Math by Fossil Logic**
 
-**Fossil Math** is a lightweight, cross-platform mathematics library written in pure C with zero external dependencies. Designed for high-performance computation, embedded systems, and cross-platform applications, Fossil Math provides a robust set of functions for linear algebra, geometry, trigonometry, and numerical analysis, all optimized for efficiency and portability.
+**Fossil Math** is a lightweight, cross-platform mathematics library written in pure C with zero external dependencies. Designed for high-performance computation, embedded systems, and cross-platform applications, Fossil Math provides a robust set of functions for linear algebra, geometry, trigonometry, numerical analysis, symbolic computation, calculator utilities, and tensor operations—all optimized for efficiency and portability.
 
 ### Key Features
 
 - **Cross-Platform Support**  
   Runs reliably on Windows, macOS, Linux, and embedded platforms.
 
-- **Zero External Dependencies**  
-  Pure C implementation ensures maximum portability, auditability, and ease of integration.
-
 - **Comprehensive Math Functions**  
-  Includes linear algebra, vectors, matrices, quaternions, trigonometry, and other numerical utilities.
+  Includes linear algebra, vectors, matrices, quaternions, trigonometry, symbolic math, calculator routines, and tensor utilities.
 
 - **Lightweight and Efficient**  
   Optimized for performance with minimal resource usage, suitable for embedded and low-power devices.

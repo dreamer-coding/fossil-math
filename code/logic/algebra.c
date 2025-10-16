@@ -152,7 +152,7 @@ void fossil_math_algebra_poly_derivative(const double* coeffs, size_t degree, do
 void fossil_math_algebra_poly_add(const double* A, size_t degA,
                                   const double* B, size_t degB,
                                   double* result, size_t* degR) {
-    *degR = (degA > degB) ? degA : degB;
+    *degR = FOSSIL_MATH_MAX(degA, degB);
     for (size_t i = 0; i <= *degR; i++) {
         double a = (i <= degA) ? A[i] : 0.0;
         double b = (i <= degB) ? B[i] : 0.0;
@@ -189,10 +189,10 @@ int fossil_math_algebra_solve_linear_system(const double* A, const double* b,
 int fossil_math_algebra_solve_quadratic(double a, double b, double c,
                                         double* root1, double* root2) {
     if (fabs(a) < 1e-12) return -1; // Not quadratic
-    double disc = b*b - 4*a*c;
+    double disc = FOSSIL_MATH_SQR(b) - 4*a*c;
     if (disc < 0) return -2; // Complex roots
     double sqrt_disc = sqrt(disc);
-    *root1 = (-b + sqrt_disc) / (2*a);
-    *root2 = (-b - sqrt_disc) / (2*a);
+    *root1 = fossil_math_safe_div(-b + sqrt_disc, 2*a, 0.0);
+    *root2 = fossil_math_safe_div(-b - sqrt_disc, 2*a, 0.0);
     return 0;
 }
