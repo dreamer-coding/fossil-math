@@ -51,125 +51,99 @@ FOSSIL_TEARDOWN(c_calc_fixture) {
 // as samples for library usage.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_CASE(c_math_test_calc_env_init_free) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    ASSUME_ITS_TRUE(env.vars == NULL);
-    ASSUME_ITS_TRUE(env.funcs == NULL);
-    ASSUME_ITS_TRUE(env.var_count == 0);
-    ASSUME_ITS_TRUE(env.func_count == 0);
-    fossil_math_calc_env_free(&env);
-    ASSUME_ITS_TRUE(env.vars == NULL);
-    ASSUME_ITS_TRUE(env.funcs == NULL);
-    ASSUME_ITS_TRUE(env.var_count == 0);
-    ASSUME_ITS_TRUE(env.func_count == 0);
+// ==========================================================
+// Derivatives Test Cases
+// ==========================================================
+
+static double test_func_quad(double x) { return x * x; }
+static double test_func_sin(double x) { return sin(x); }
+static double test_func_cubic(double x) { return x * x * x; }
+
+FOSSIL_TEST_CASE(c_math_test_calc_derivative) {
+    double h = 1e-6;
+    double d_quad = fossil_math_calc_derivative(test_func_quad, 2.0, h);
+    ASSUME_ITS_EQUAL_F64(d_quad, 4.0, 1e-4);
+
+    double d_sin = fossil_math_calc_derivative(test_func_sin, 0.0, h);
+    ASSUME_ITS_EQUAL_F64(d_sin, 1.0, 1e-4);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_set_var) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    int ret = fossil_math_calc_set_var(&env, "x", 42.0);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(env.var_count == 1);
-    ASSUME_ITS_EQUAL_F64(env.vars[0].value, 42.0, FOSSIL_TEST_FLOAT_EPSILON);
-    ret = fossil_math_calc_set_var(&env, "x", 24.0);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(env.var_count == 1);
-    ASSUME_ITS_EQUAL_F64(env.vars[0].value, 24.0, FOSSIL_TEST_FLOAT_EPSILON);
-    ret = fossil_math_calc_set_var(&env, "y", 100.0);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(env.var_count == 2);
-    ASSUME_ITS_EQUAL_F64(env.vars[1].value, 100.0, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_env_free(&env);
+FOSSIL_TEST_CASE(c_math_test_calc_derivative_n) {
+    double h = 1e-6;
+    double d2_quad = fossil_math_calc_derivative_n(test_func_quad, 2.0, 2, h);
+    ASSUME_ITS_EQUAL_F64(d2_quad, 2.0, 1e-3);
+
+    double d0_sin = fossil_math_calc_derivative_n(test_func_sin, 0.0, 0, h);
+    ASSUME_ITS_EQUAL_F64(d0_sin, 0.0, 1e-6);
+
+    double d1_sin = fossil_math_calc_derivative_n(test_func_sin, 0.0, 1, h);
+    ASSUME_ITS_EQUAL_F64(d1_sin, 1.0, 1e-4);
+
+    double d2_sin = fossil_math_calc_derivative_n(test_func_sin, 0.0, 2, h);
+    ASSUME_ITS_EQUAL_F64(d2_sin, 0.0, 1e-3);
+
+    double d_neg = fossil_math_calc_derivative_n(test_func_quad, 1.0, -1, h);
+    ASSUME_ITS_TRUE(isnan(d_neg));
 }
 
-static double test_add_func(double* args, size_t argc) {
-    return argc == 2 ? args[0] + args[1] : 0.0;
+// ==========================================================
+// Integrals Test Cases
+// ==========================================================
+
+FOSSIL_TEST_CASE(c_math_test_calc_integrate_trapezoidal) {
+    double result = fossil_math_calc_integrate_trapezoidal(test_func_quad, 0.0, 1.0, 1000);
+    ASSUME_ITS_EQUAL_F64(result, 1.0 / 3.0, 1e-3);
 }
 
-static double test_mul_func(double* args, size_t argc) {
-    return argc == 2 ? args[0] * args[1] : 0.0;
+FOSSIL_TEST_CASE(c_math_test_calc_integrate_simpson) {
+    double result = fossil_math_calc_integrate_simpson(test_func_quad, 0.0, 1.0, 1000);
+    ASSUME_ITS_EQUAL_F64(result, 1.0 / 3.0, 1e-5);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_register_func) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    int ret = fossil_math_calc_register_func(&env, "add", test_add_func, 2);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(env.func_count == 1);
-    ASSUME_ITS_TRUE(env.funcs[0].func == (fossil_math_calc_func_t)test_add_func);
-    ASSUME_ITS_TRUE(env.funcs[0].argc == 2);
-    ret = fossil_math_calc_register_func(&env, "add", test_add_func, 2);
-    ASSUME_ITS_TRUE(ret == 0); // Should update, not add new
-    ASSUME_ITS_TRUE(env.func_count == 1);
-    ret = fossil_math_calc_register_func(&env, "mul", test_add_func, 2);
-    ASSUME_ITS_TRUE(ret == 0);
-    ASSUME_ITS_TRUE(env.func_count == 2);
-    fossil_math_calc_env_free(&env);
+FOSSIL_TEST_CASE(c_math_test_calc_integrate_montecarlo) {
+    double result = fossil_math_calc_integrate_montecarlo(test_func_quad, 0.0, 1.0, 100000);
+    ASSUME_ITS_EQUAL_F64(result, 1.0 / 3.0, 1e-2);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_eval_simple) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    int ret_var = fossil_math_calc_set_var(&env, "x", 5.0);
-    int ret_func = fossil_math_calc_register_func(&env, "add", test_add_func, 2);
-    ASSUME_ITS_TRUE(ret_var == 0);
-    ASSUME_ITS_TRUE(ret_func == 0);
-    fossil_math_calc_eval("add(x, 3)", &env);
-    fossil_math_calc_env_free(&env);
+// ==========================================================
+// Limits Test Cases
+// ==========================================================
+
+FOSSIL_TEST_CASE(c_math_test_calc_limit) {
+    double h = 1e-6;
+    double lim = fossil_math_calc_limit(test_func_sin, 0.0, h);
+    ASSUME_ITS_EQUAL_F64(lim, 0.0, 1e-6);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_eval_operators) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    double result = fossil_math_calc_eval("2 + 3", &env);
-    ASSUME_ITS_EQUAL_F64(result, 5.0, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_set_var(&env, "x", 4.0);
-    result = fossil_math_calc_eval("x * 2", &env);
-    ASSUME_ITS_EQUAL_F64(result, 8.0, FOSSIL_TEST_FLOAT_EPSILON);
-    fossil_math_calc_env_free(&env);
+// ==========================================================
+// Root Finding Test Cases
+// ==========================================================
+
+static double test_func_root(double x) { return x * x - 2.0; }
+static double test_func_root_deriv(double x) { return 2.0 * x; }
+
+FOSSIL_TEST_CASE(c_math_test_calc_root_newton) {
+    double root = fossil_math_calc_root_newton(test_func_root, test_func_root_deriv, 1.0, 1e-6, 100);
+    ASSUME_ITS_EQUAL_F64(root, sqrt(2.0), 1e-6);
 }
 
-FOSSIL_TEST_CASE(c_math_test_calc_eval_function_args) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    int ret = fossil_math_calc_register_func(&env, "mul", test_mul_func, 2);
-    ASSUME_ITS_TRUE(ret == 0);
-    fossil_math_calc_eval("mul(6, 7)", &env);
-    fossil_math_calc_env_free(&env);
-}
-
-FOSSIL_TEST_CASE(c_math_test_calc_eval_nested_functions) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    fossil_math_calc_register_func(&env, "mul", test_mul_func, 2);
-    fossil_math_calc_register_func(&env, "add", test_add_func, 2);
-    fossil_math_calc_eval("add(mul(2, 3), 4)", &env);
-    fossil_math_calc_env_free(&env);
-}
-
-FOSSIL_TEST_CASE(c_math_test_calc_eval_invalid_expr) {
-    fossil_math_calc_env_t env;
-    fossil_math_calc_env_init(&env);
-    double result = fossil_math_calc_eval("2 +", &env);
-    ASSUME_ITS_TRUE(isnan(result));
-    result = fossil_math_calc_eval("add(1)", &env); // wrong argc
-    ASSUME_ITS_TRUE(isnan(result));
-    fossil_math_calc_env_free(&env);
+FOSSIL_TEST_CASE(c_math_test_calc_root_bisection) {
+    double root = fossil_math_calc_root_bisection(test_func_root, 0.0, 2.0, 1e-6, 100);
+    ASSUME_ITS_EQUAL_F64(root, sqrt(2.0), 1e-6);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_calc_tests) {
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_env_init_free);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_set_var);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_register_func);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_simple);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_operators);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_function_args);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_nested_functions);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_eval_invalid_expr);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_derivative);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_derivative_n);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_trapezoidal);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_simpson);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_montecarlo);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_limit);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_root_newton);
+    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_root_bisection);
 
     FOSSIL_TEST_REGISTER(c_calc_fixture);
 } // end of tests
