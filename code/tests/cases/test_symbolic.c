@@ -22,7 +22,7 @@
  * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 #include "fossil/math/framework.h"
 
 
@@ -33,7 +33,7 @@
 // mock objects are set here.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_SUITE(c_symbolic_fixture);
+FOSSIL_SUITE(c_symbolic_fixture);
 
 FOSSIL_SETUP(c_symbolic_fixture) {
     // Setup the test fixture
@@ -57,7 +57,7 @@ static double test_var_lookup(const char* name) {
     return 0.0;
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_parse_and_to_string) {
+FOSSIL_TEST(c_math_test_sym_parse_and_to_string) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("x + 2");
     char buf[64];
     size_t len = fossil_math_sym_to_string(expr, buf, sizeof(buf));
@@ -66,14 +66,14 @@ FOSSIL_TEST_CASE(c_math_test_sym_parse_and_to_string) {
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_eval) {
+FOSSIL_TEST(c_math_test_sym_eval) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("x * y + 1");
     double val = fossil_math_sym_eval(expr, test_var_lookup);
     ASSUME_ITS_EQUAL_F64(val, 7.0, FOSSIL_TEST_FLOAT_EPSILON);
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_substitute) {
+FOSSIL_TEST(c_math_test_sym_substitute) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("x + y");
     fossil_math_sym_expr_t* sub = fossil_math_sym_substitute(expr, "x", 5.0);
     double val = fossil_math_sym_eval(sub, test_var_lookup);
@@ -82,14 +82,14 @@ FOSSIL_TEST_CASE(c_math_test_sym_substitute) {
     fossil_math_sym_free(sub);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_parse_constants) {
+FOSSIL_TEST(c_math_test_sym_parse_constants) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("pi + e");
     double val = fossil_math_sym_eval(expr, NULL);
     ASSUME_ITS_EQUAL_F64(val, FOSSIL_MATH_PI + FOSSIL_MATH_E, FOSSIL_TEST_FLOAT_EPSILON);
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_simplify_basic) {
+FOSSIL_TEST(c_math_test_sym_simplify_basic) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("2 + 3");
     expr = fossil_math_sym_simplify(expr);
     double val = fossil_math_sym_eval(expr, NULL);
@@ -100,7 +100,7 @@ FOSSIL_TEST_CASE(c_math_test_sym_simplify_basic) {
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_to_string_parens) {
+FOSSIL_TEST(c_math_test_sym_to_string_parens) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("x + y * 2");
     char buf[64];
     fossil_math_sym_to_string(expr, buf, sizeof(buf));
@@ -109,14 +109,14 @@ FOSSIL_TEST_CASE(c_math_test_sym_to_string_parens) {
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_eval_division_by_zero) {
+FOSSIL_TEST(c_math_test_sym_eval_division_by_zero) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("1 / 0");
     double val = fossil_math_sym_eval(expr, NULL);
     ASSUME_ITS_TRUE(isnan(val));
     fossil_math_sym_free(expr);
 }
 
-FOSSIL_TEST_CASE(c_math_test_sym_substitute_all_vars) {
+FOSSIL_TEST(c_math_test_sym_substitute_all_vars) {
     fossil_math_sym_expr_t* expr = fossil_math_sym_parse("x + y");
     fossil_math_sym_expr_t* sub1 = fossil_math_sym_substitute(expr, "x", 10.0);
     fossil_math_sym_expr_t* sub2 = fossil_math_sym_substitute(sub1, "y", 20.0);
