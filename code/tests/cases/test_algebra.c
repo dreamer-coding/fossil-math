@@ -193,20 +193,20 @@ FOSSIL_TEST(c_math_test_solve_quadratic_complex) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_algebra_tests) {
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_matrix_transpose);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_matrix_identity);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_matrix_determinant);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_poly_eval);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_poly_derivative);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_poly_add);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_poly_mul);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_scalar_mul);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_matrix_mul);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_solve_quadratic_real);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_solve_quadratic_complex);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_vector_add);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_vector_sub);
-    FOSSIL_TEST_ADD(c_algebra_fixture, c_math_test_dot_product);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_matrix_transpose);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_matrix_identity);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_matrix_determinant);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_poly_eval);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_poly_derivative);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_poly_add);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_poly_mul);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_scalar_mul);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_matrix_mul);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_solve_quadratic_real);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_solve_quadratic_complex);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_vector_add);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_vector_sub);
+    FOSSIL_ADD_TEST(c_algebra_fixture, c_math_test_dot_product);
 
-    FOSSIL_TEST_REGISTER(c_algebra_fixture);
+    FOSSIL_ADD_SUITE(c_algebra_fixture);
 } // end of tests

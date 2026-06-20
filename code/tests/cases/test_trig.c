@@ -115,12 +115,12 @@ FOSSIL_TEST(c_math_test_inverse_hyperbolic) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_trig_tests) {
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_deg_to_rad);
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_rad_to_deg);
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_sin_cos_tan);
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_inverse_trig);
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_hyperbolic);
-    FOSSIL_TEST_ADD(c_trig_fixture, c_math_test_inverse_hyperbolic);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_deg_to_rad);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_rad_to_deg);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_sin_cos_tan);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_inverse_trig);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_hyperbolic);
+    FOSSIL_ADD_TEST(c_trig_fixture, c_math_test_inverse_hyperbolic);
 
-    FOSSIL_TEST_REGISTER(c_trig_fixture);
+    FOSSIL_ADD_SUITE(c_trig_fixture);
 } // end of tests

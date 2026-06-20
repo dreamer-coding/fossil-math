@@ -131,14 +131,14 @@ FOSSIL_TEST(c_math_test_sym_substitute_all_vars) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_symbolic_tests) {
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_parse_and_to_string);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_eval);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_substitute);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_parse_constants);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_simplify_basic);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_to_string_parens);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_eval_division_by_zero);
-    FOSSIL_TEST_ADD(c_symbolic_fixture, c_math_test_sym_substitute_all_vars);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_parse_and_to_string);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_eval);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_substitute);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_parse_constants);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_simplify_basic);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_to_string_parens);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_eval_division_by_zero);
+    FOSSIL_ADD_TEST(c_symbolic_fixture, c_math_test_sym_substitute_all_vars);
 
-    FOSSIL_TEST_REGISTER(c_symbolic_fixture);
+    FOSSIL_ADD_SUITE(c_symbolic_fixture);
 } // end of tests

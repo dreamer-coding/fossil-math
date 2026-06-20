@@ -142,17 +142,17 @@ FOSSIL_TEST(cpp_math_test_mod) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_math_tests) {
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_constants);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_macros);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_abs);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_safe_div);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_equal);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_lerp);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_smoothstep);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_factorial);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_binomial);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_wrap);
-    FOSSIL_TEST_ADD(cpp_math_fixture, cpp_math_test_mod);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_constants);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_macros);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_abs);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_safe_div);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_equal);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_lerp);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_smoothstep);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_factorial);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_binomial);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_wrap);
+    FOSSIL_ADD_TEST(cpp_math_fixture, cpp_math_test_mod);
 
-    FOSSIL_TEST_REGISTER(cpp_math_fixture);
+    FOSSIL_ADD_SUITE(cpp_math_fixture);
 } // end of tests

@@ -123,16 +123,16 @@ FOSSIL_TEST(c_numeric_test_interpolate_simple) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_numeric_tests) {
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_trapezoidal_linear);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_trapezoidal_quad);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_simpson_linear);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_simpson_quad);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_romberg_sin);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_integrate_mode_simpson);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_derivative_linear);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_derivative_quad);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_solve_newton_sqrt2);
-    FOSSIL_TEST_ADD(c_numeric_fixture, c_numeric_test_interpolate_simple);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_trapezoidal_linear);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_trapezoidal_quad);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_simpson_linear);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_simpson_quad);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_romberg_sin);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_integrate_mode_simpson);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_derivative_linear);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_derivative_quad);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_solve_newton_sqrt2);
+    FOSSIL_ADD_TEST(c_numeric_fixture, c_numeric_test_interpolate_simple);
 
-    FOSSIL_TEST_REGISTER(c_numeric_fixture);
+    FOSSIL_ADD_SUITE(c_numeric_fixture);
 } // end of tests

@@ -88,11 +88,11 @@ FOSSIL_TEST(cpp_math_test_point_in_circle_inside) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_geom_tests) {
-    FOSSIL_TEST_ADD(cpp_geom_fixture, cpp_math_test_distance2d);
-    FOSSIL_TEST_ADD(cpp_geom_fixture, cpp_math_test_distance3d);
-    FOSSIL_TEST_ADD(cpp_geom_fixture, cpp_math_test_circle_area);
-    FOSSIL_TEST_ADD(cpp_geom_fixture, cpp_math_test_circle_circumference);
-    FOSSIL_TEST_ADD(cpp_geom_fixture, cpp_math_test_point_in_circle_inside);
+    FOSSIL_ADD_TEST(cpp_geom_fixture, cpp_math_test_distance2d);
+    FOSSIL_ADD_TEST(cpp_geom_fixture, cpp_math_test_distance3d);
+    FOSSIL_ADD_TEST(cpp_geom_fixture, cpp_math_test_circle_area);
+    FOSSIL_ADD_TEST(cpp_geom_fixture, cpp_math_test_circle_circumference);
+    FOSSIL_ADD_TEST(cpp_geom_fixture, cpp_math_test_point_in_circle_inside);
 
-    FOSSIL_TEST_REGISTER(cpp_geom_fixture);
+    FOSSIL_ADD_SUITE(cpp_geom_fixture);
 } // end of tests

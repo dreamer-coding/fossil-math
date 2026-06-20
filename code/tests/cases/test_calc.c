@@ -135,14 +135,14 @@ FOSSIL_TEST(c_math_test_calc_root_bisection) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_calc_tests) {
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_derivative);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_derivative_n);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_trapezoidal);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_simpson);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_integrate_montecarlo);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_limit);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_root_newton);
-    FOSSIL_TEST_ADD(c_calc_fixture, c_math_test_calc_root_bisection);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_derivative);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_derivative_n);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_integrate_trapezoidal);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_integrate_simpson);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_integrate_montecarlo);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_limit);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_root_newton);
+    FOSSIL_ADD_TEST(c_calc_fixture, c_math_test_calc_root_bisection);
 
-    FOSSIL_TEST_REGISTER(c_calc_fixture);
+    FOSSIL_ADD_SUITE(c_calc_fixture);
 } // end of tests

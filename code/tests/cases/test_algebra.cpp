@@ -169,19 +169,19 @@ FOSSIL_TEST(cpp_math_test_solve_quadratic_real) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_algebra_tests) {
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_matrix_transpose);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_matrix_identity);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_matrix_determinant);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_poly_eval);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_poly_derivative);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_poly_add);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_poly_mul);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_scalar_mul);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_matrix_mul);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_solve_quadratic_real);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_vector_add);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_vector_sub);
-    FOSSIL_TEST_ADD(cpp_algebra_fixture, cpp_math_test_dot_product);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_matrix_transpose);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_matrix_identity);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_matrix_determinant);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_poly_eval);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_poly_derivative);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_poly_add);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_poly_mul);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_scalar_mul);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_matrix_mul);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_solve_quadratic_real);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_vector_add);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_vector_sub);
+    FOSSIL_ADD_TEST(cpp_algebra_fixture, cpp_math_test_dot_product);
 
-    FOSSIL_TEST_REGISTER(cpp_algebra_fixture);
+    FOSSIL_ADD_SUITE(cpp_algebra_fixture);
 } // end of tests

@@ -174,13 +174,13 @@ FOSSIL_TEST(c_tensor_test_dot_matrix) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_tensor_tests) {
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_create_and_free);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_set_and_get);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_fill);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_add);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_mul);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_dot_vector);
-    FOSSIL_TEST_ADD(c_tensor_fixture, c_tensor_test_dot_matrix);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_create_and_free);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_set_and_get);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_fill);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_add);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_mul);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_dot_vector);
+    FOSSIL_ADD_TEST(c_tensor_fixture, c_tensor_test_dot_matrix);
 
-    FOSSIL_TEST_REGISTER(c_tensor_fixture);
+    FOSSIL_ADD_SUITE(c_tensor_fixture);
 } // end of tests
